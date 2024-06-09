@@ -12,6 +12,7 @@ class User(Base):
   last_name = Column(String, nullable=True)
   email = Column(String, nullable=True)
   document_type_id = Column(Integer, ForeignKey("document_types.id"))
+  phone_number = Column(String, nullable=True)
   document = Column(String, unique=True, index=True)
   user_type_id = Column(Integer, ForeignKey('user_types.id'))
   hashed_password = Column(String)

@@ -15,6 +15,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         last_name=user.last_name,
         email=user.email,
         document=user.document,
+        phone_number=user.phone_number,
         document_type_id=user.document_type_id,
         user_type_id=user.user_type_id,
         hashed_password=hashed_password
