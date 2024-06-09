@@ -16,7 +16,7 @@ def generate_token(expiration_minutes: int, user: User) -> str:
         "exp": expiration_time,
     }
     payload.update(user.dict())
-    token = jwt.encode(payload,"7gkgXucjwNlPYwACkw2npnSccPvXB0BY", algorithm='HS256')
+    token = jwt.encode(payload, getenv(SECRET_KEY_TOKEN), algorithm='HS256')
     return token
   
 def verify_password(plain_password: str, hashed_password: str) -> bool:

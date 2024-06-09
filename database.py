@@ -2,9 +2,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from os import getenv
 
 # Cadena de conexión a la base de datos PostgreSQL
-SQLALCHEMY_DATABASE_URL = "postgresql://login_as_user:hdc5GgXhPdBHos2pTia0BfVJUnNFBNCH@dpg-cpie1da1hbls73bge5a0-a.oregon-postgres.render.com/login_as"
+SQLALCHEMY_DATABASE_URL = getenv(DATABASE_URL)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
