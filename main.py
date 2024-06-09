@@ -22,6 +22,10 @@ app.include_router(router)
 # Configuración de registro
 logging.basicConfig(level=logging.INFO)
 
+@app.get("/")
+async def root():
+    return PlainTextResponse("Welcome to login ms")
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
