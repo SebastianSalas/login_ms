@@ -45,7 +45,7 @@ async def validate_token(credentials: HTTPAuthorizationCredentials = Depends(sec
 
 def verify_token(token: str) -> bool:
     try:
-        payload = jwt.decode(token, getenv("SECRET_KEY"), algorithms=["HS256"])
+        payload = jwt.decode(token, getenv("SECRET_KEY_TOKEN"), algorithms=["HS256"])
 
         expiration_time = datetime.fromtimestamp(payload["exp"])
         if expiration_time < datetime.utcnow():

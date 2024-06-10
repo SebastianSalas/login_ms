@@ -10,6 +10,18 @@ router = APIRouter()
 async def test_api():
     return {"message": "API works!"}
 
+# Ruta endpoints
+@router.get("/", tags=["Endpoints"])
+async def test_api():
+    return {
+        "endpoints": {
+            "users": "/user/users/<id>",
+            "signup": "/user/signup",
+            "login": "/user/login",
+            "logout": "/user/logout"
+        }
+    }
+
 # Incluyendo routers de otros módulos
 router.include_router(user_controller, prefix="/user", tags=["Auth"])
 router.include_router(auth_router, prefix="/user", tags=["Auth"])

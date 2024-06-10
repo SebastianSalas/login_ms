@@ -1,0 +1,4 @@
+__pycache__
+.venv
+.env
+mmsvc_auth.yaml

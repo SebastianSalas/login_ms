@@ -12,11 +12,11 @@ user_controller = APIRouter()
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = get_user_by_document(user.document, db)
     if db_user:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
+        raise HTTPException(status_code=400, detail="Username already registered")
     return create_user(db=db, user=user)
 
 @user_controller.get("/users/", response_model=List[User])
-def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+def read_users(db: Session = Depends(get_db)):
     users = all_users(db)
     return users
 

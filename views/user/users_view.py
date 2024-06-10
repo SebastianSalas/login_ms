@@ -25,7 +25,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
     return db_user
   
 def all_users(db: Session = Depends(get_db)):
-  return db.query(UserModel).offset(skip).limit(limit).all()
+  return db.query(UserModel).all()
 
 def find_user(user_id: int, db: Session = Depends(get_db)):
   return db.query(UserModel).filter(UserModel.id == user_id).first()
