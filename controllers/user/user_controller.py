@@ -1,24 +1,34 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from database import get_db
 from models.user_model import User as UserModel
-from views.user.users_view import create_user, all_users, find_user, get_user_by_document
+from views.user.users_view import (
+    create_user,
+    all_users,
+    find_user,
+    get_user_by_document,
+)
 from schemas.user_schema import User, UserCreate
 
 user_controller = APIRouter()
 
-@user_controller.post("/signup", response_model=User)
+
+@user_controller.post(
+    "/signup", response_model=User, status_code=status.HTTP_201_CREATED
+)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = get_user_by_document(user.document, db)
-    if db_user:
+    if db_user != None:
         raise HTTPException(status_code=400, detail="Username already registered")
     return create_user(db=db, user=user)
+
 
 @user_controller.get("/users/", response_model=List[User])
 def read_users(db: Session = Depends(get_db)):
     users = all_users(db)
     return users
+
 
 @user_controller.get("/users/{user_id}", response_model=User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
@@ -26,6 +36,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
 
 @user_controller.put("/users/{user_id}", response_model=User)
 def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
@@ -42,6 +53,7 @@ def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_user)
     return db_user
+
 
 @user_controller.delete("/users/{user_id}")
 def delete_user(user_id: int, db: Session = Depends(get_db)):
